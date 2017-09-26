@@ -11,7 +11,7 @@ feature 'Siging in', %q{
   scenario 'Existing user try to sign in' do
     #sign_in(user)
       visit root_path
-      click_on 'Log in'
+      click_on 'LogIN'
       fill_in 'Email', with: user.email
       fill_in 'Password', with: user.password
       click_on 'Log in'
