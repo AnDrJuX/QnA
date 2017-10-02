@@ -15,8 +15,8 @@ feature 'create answer on question', %q{
     save_and_open_page
     click_on "MyString"
 
-    expect(page).to have_content ("MyTextTextText1")
-    expect(page).to have_content ("MyTextTextText2")
-    expect(page).to have_content ("MyTextTextText3")
+    expect(page).to have_content "MyTextTextText1"
+    expect(page).to have_content "MyTextTextText2"
+    expect(page).to have_content "MyTextTextText3"
   end
 end

@@ -11,7 +11,7 @@ feature 'view question', %q{
 
   scenario 'All users view questions' do
     visit questions_path
-    save_and_open_page
+    #save_and_open_page
     expect(page).to have_content('MyString', count: 3)
   end
 
