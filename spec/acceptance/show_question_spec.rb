@@ -6,17 +6,17 @@ feature 'create answer on question', %q{
    I want to be able send answer
  } do
 
-  given(:user) { create(:user) }
-  given(:question) { create(:question, user: user) }
-  given!(:answers) { create_list(:answer, 3, question: question, user: user) }
+  given(:user) {create(:user)}
+  given(:question) {create(:question, user: user)}
+  given!(:answers) {create_list(:answer, 3, question: question, user: user)}
 
   scenario 'view questions and answers' do
     visit questions_path(question)
     save_and_open_page
     click_on "MyString"
 
-    expect(page).to have_content "MyTextTextText1"
-    expect(page).to have_content "MyTextTextText2"
-    expect(page).to have_content "MyTextTextText3"
+    answers.each do |answer|
+      expect(page).to have_content(answer.body)
+    end
   end
 end
