@@ -12,7 +12,7 @@ feature 'create answer on question', %q{
 
   scenario 'view questions and answers' do
     visit questions_path(question)
-    save_and_open_page
+    #save_and_open_page
     click_on "MyString"
 
     answers.each do |answer|
