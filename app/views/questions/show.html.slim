@@ -3,6 +3,7 @@ p=  @question.body
 
 .answers
   = render @question.answers
+  br
 
 - if user_signed_in?
   = render "answers/form", question: @question, answer: @answer
