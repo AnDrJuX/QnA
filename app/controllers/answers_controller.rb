@@ -9,6 +9,12 @@ class AnswersController < ApplicationController
     @answer.save
   end
 
+  def update
+    @answer.update(answer_params)
+    @question = @answer.question
+  end
+
+
   def destroy
     if current_user.owner?(@answer)
       @answer.destroy

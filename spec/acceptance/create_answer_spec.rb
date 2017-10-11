@@ -6,7 +6,7 @@ feature 'create answer on question', %q{
    I want to be able send answer
  } do
 
-  given(:user) {create(:user)}
+  given!(:user) {create(:user)}
   given(:other_user) {create(:user)}
   given!(:question) {create(:question, user: user)}
 

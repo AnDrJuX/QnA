@@ -1,5 +1,21 @@
-= answer.body
-br
+- if answer.persisted?
+  tr.answer
+    td
+      .body = answer.body
+      .created_at = answer.created_at
 
-- if user_signed_in? && current_user.owner?(answer)
-  = link_to 'Delete answer', question_answer_path(answer.question, answer), method: :delete, data: {confirm: 'Are you sure?'}
+      .edition_errors
+        = form_for answer, remote: true do |f|
+          p= f.label :body, 'Answer'
+          p= f.text_area :body
+          p= f.submit 'Save'
+
+      - if current_user&.author_of?(answer)
+        td.manage.edit
+          = link_to 'Edit answer'
+        td.manage.delete
+          = link_to 'Delete answer', answer_path(answer), data: {confirm: 'Are you sure?'}, method: :delete
+      - else
+        td
+        td
+ 
