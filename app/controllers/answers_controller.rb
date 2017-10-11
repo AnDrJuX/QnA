@@ -6,14 +6,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-
-    if @answer.save
-      flash[:notice] = 'Your answer created'
-      redirect_to question_path(@question)
-    else
-      flash[:notice] = 'Your answer not created'
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def destroy
