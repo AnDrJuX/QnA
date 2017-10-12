@@ -4,21 +4,26 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:destroy]
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.user = current_user
     @answer.save
+
+    if @answer.save
+      flash[:notice] = 'Your answer created'
+    else
+      flash[:notice] = 'Your answer not created'
+    end
   end
 
-  def update
-    @answer.update(answer_params)
-    @question = @answer.question
-  end
+  #def update
+   # @answer.update(answer_params)
+    #@question = @answer.question
+ # end
 
 
   def destroy
     if current_user.owner?(@answer)
       @answer.destroy
-      flash[:notice] = 'Your answer deleted.'
       redirect_to question_path(@question)
     else
       redirect_to question_path(@question), notice: 'You are not author.'

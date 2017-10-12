@@ -1,10 +1,9 @@
-p = @question.title
+h1 = @question.title
 br
 p = @question.body
 
 .answers
-  = render 'answers'
-  br
+  = render @question.answers
 
   - if user_signed_in?
     = render "answers/form", question: @question, answer: @answer
