@@ -9,6 +9,6 @@ p= @question.body
       .new_answer
         = form_for [@question, Answer.new], remote: true do |form|
 
-          p = form.label :body
+          p = form.label :body, 'Answer'
           p = form.text_area :body, rows: 5
-          p = form.submit 'Answer the question', class: 'answer-the-question'
+          p = form.submit 'Answer send', class: 'answer-the-question'
