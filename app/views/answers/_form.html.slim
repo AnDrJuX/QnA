@@ -1,0 +1,7 @@
+.flash
+br
+= form_for [@question, @answer], remote: true do |f|
+  = render 'common/errors', resource: @answer
+  = f.label :body, 'Answer'
+  = f.text_area :body
+  = f.submit 'Answer send'
