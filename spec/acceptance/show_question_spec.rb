@@ -15,8 +15,6 @@ feature 'create answer on question', %q{
     #save_and_open_page
     click_on "MyString"
 
-    answers.each do |answer|
-      expect(page).to have_content(answer.body)
-    end
+    "#{answers.each {|answer| expect(page).to have_content answer.body } }"
   end
 end
