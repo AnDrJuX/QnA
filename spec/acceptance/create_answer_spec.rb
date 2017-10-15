@@ -29,3 +29,10 @@ feature 'create answer on question', %q{
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 end
+
+  scenario 'User try to create invalid answer.', js: true do
+    sign_in user
+    visit question_path(question)
+    click_on 'Create'
+    expect(page).to have_content 'Answers body cen`t be blank.'
+  end
