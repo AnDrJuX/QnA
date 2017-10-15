@@ -1,10 +1,14 @@
+$('.flash').html('<%= flash[:notice] %>');
 <% if @answer.errors.present? %>
-$(".answer_error_<%= @answer.id %>").show();
-$(".answer_error_<%= @answer.id %>").html("<%= j render 'common/errors', resource: @answer %>")
+<% @answer.errors.full_messages.each do |message| %>
+$('.answer-errors').html("<%= j message %>");
+<% end %>
 <% else %>
-$(".answer_error_<%= @answer.id %>").hide();
-$(".edit_form_<%= @answer.id %>").hide();
-$(".body_of_<%= @answer.id %>").html('<%= @answer.body %>').show();
-$(".updated_for_<%= @answer.id %>").html('<%= @answer.updated_at %>').show();
-$(".edit_answer_<%= @answer.id %>").show();
+$("#answer-<%= @answer.id %>").html("<%= j render @answer %>");
+$(".edit-answer-link").click(function(e) {
+    e.preventDefault();
+    $(this).hide();
+    answer_id = $(this).data('answerId');
+    $("form#edit-answer-" + answer_id).show();
+    });
 <% end %>
