@@ -1,4 +1,4 @@
-require 'acceptance_helper'
+require_relative 'acceptance_helper'
 
 feature 'Editing answer', %q{
    In order to fix mistake

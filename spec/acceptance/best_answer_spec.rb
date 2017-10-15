@@ -1,4 +1,4 @@
-require 'acceptance_helper'
+require_relative 'acceptance_helper'
 
 feature 'check best answer', %q{
    In order to check best answer
