@@ -14,5 +14,9 @@ RSpec.describe Answer, type: :model do
       answer.check_best
       expect(answer).to be_best
     end
+
+    #it 'if there is another better answer, it ceases to be the best.' do
+      #expect(page).to have_content 'Now your answer is the best.'
+    #end
   end
 end

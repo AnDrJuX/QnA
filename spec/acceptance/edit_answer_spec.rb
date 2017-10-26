@@ -33,8 +33,9 @@ feature 'Editing answer', %q{
     end
 
     scenario ' try edit own answer', js: true do
-      click_on 'Edit'
-      within '.answers' do
+
+      within "#answer-#{answer.id}" do
+        click_on 'Edit'
         fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
 

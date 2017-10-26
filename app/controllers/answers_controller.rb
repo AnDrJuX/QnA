@@ -16,11 +16,13 @@ class AnswersController < ApplicationController
 
   def best_answer
     @answer.check_best if current_user.owner?(@answer.question)
+    #flash[:notice] = 'Now your answer is the best.'
   end
 
   def update
     if current_user.owner?(@answer)
       @answer.update(answer_params)
+      @question = @answer.question
       flash.now[:notice] = 'Your answer updated'
     else
       flash.now[:notice] = 'Your answer was not updated'
@@ -31,7 +33,7 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.owner?(@answer)
       @answer.destroy
-      redirect_to question_path(@question)
+      redirect_to question_path(@question), notice: 'Your answer deleted.'
     else
       redirect_to question_path(@question), notice: 'You are not author.'
     end
