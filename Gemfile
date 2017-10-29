@@ -22,10 +22,11 @@ gem 'database_cleaner'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'
-  gem 'selenium-webdriver'
+  #gem 'selenium-webdriver'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  gem 'poltergeist'
+  #gem 'poltergeist'
+  gem "capybara-webkit"
 end
 
 group :development do
@@ -38,6 +39,6 @@ end
 group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'launchy'
-  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  #gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

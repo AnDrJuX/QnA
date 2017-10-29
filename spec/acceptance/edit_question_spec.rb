@@ -1,43 +1,56 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
-feature 'Edit question', %q(
-   In order to change question
-   As an user
-   I want to be able to edit question
- ) do
+feature 'Editing question', %q{
+   In order to fix mistake
+   As an author question
+   I want to be able to edit my question
+ } do
 
-  given(:user)     { create(:user) }
-  given(:question) { create(:question, user: user) }
+  given(:user) {create(:user)}
+  given(:another_user) {create(:user)}
+  given!(:question) {create(:question, user: user)}
+  given!(:another_question) {create(:question, user: another_user)}
+
+  scenario 'NonAuthenticated user try edit answer' do
+    visit question_path(question)
+
+    expect(page).to_not have_link 'Edit'
+  end
 
   describe 'Authenticated user' do
-    scenario 'see the link to edit his question', js: true do
+    before do
+      sign_in(user)
       visit question_path(question)
+    end
 
-      within '.question' do
+    scenario 'sees link to edit answer' do
+      within '.question-data' do
         expect(page).to have_link 'Edit question'
       end
     end
-    scenario 'tries to edit his question', js: true do
-      visit question_path(question)
 
-      within '.question' do
-        click_on 'Edit question'
-        fill_in 'Title', with: 'New title'
-        fill_in 'Body', with: 'New body'
-        click_on 'Save'
+    scenario ' try edit own question', js: true do
+      click_on 'Edit question'
+
+      within '.question-data' do
+        fill_in 'Question title', with: 'edited question title'
+        fill_in 'Question body', with: 'edited question body'
+        click_on 'Save question'
 
         expect(page).to_not have_content question.title
         expect(page).to_not have_content question.body
-        expect(page).to have_content 'New title'
-        expect(page).to have_content 'New body'
-        expect(current_page).to eq question_path(question)
-
+        expect(page).to have_content 'edited question title'
+        expect(page).to have_content 'edited question body'
       end
     end
-    scenario 'tries to edit someone else question' do
 
+    scenario 'try edit not own question', js: true do
+      visit question_path(another_question)
+
+      within '.question-data' do
+        expect(page).to_not have_link 'Edit question'
+      end
     end
 
   end
-  describe 'Unauthenticated user'
 end

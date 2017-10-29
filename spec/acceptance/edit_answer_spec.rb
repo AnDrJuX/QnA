@@ -1,45 +1,57 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
-feature 'Answer editing', %q{
+feature 'Editing answer', %q{
    In order to fix mistake
-   As an author of Answer
-   I qant to be able to edit answer
+   As an author answer
+   I want to be able to edit my answer
  } do
 
-  given(:user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
-  given!(:answer) { create(:answer, user: user, question: question) }
+  given(:user) {create(:user)}
+  given(:another_user) {create(:user)}
+  given!(:question) {create(:question, user: user)}
+  given!(:another_question) {create(:question, user: user)}
+  given!(:answer) {create(:answer, question: question, user: user)}
+  given!(:another_answer) {create(:answer, question: another_question, user: another_user)}
 
-  scenario 'Unauthenticated user tried to edit answer' do
+
+  scenario 'NonAuthenticated user try edit answer' do
     visit question_path(question)
 
-    expect(page).to_not have_link 'edit answer'
+    expect(page).to_not have_link 'Edit'
   end
 
   describe 'Authenticated user' do
     before do
-        sign_in user
-        visit question_path(question)
-      end
+      sign_in(user)
+      visit question_path(question)
+    end
 
-    scenario 'see link to edit his answer' do
-      within '.edit' do
-        expect(page).to have_link 'Edit answer'
+    scenario 'sees link to edit answer' do
+      within '.answers' do
+        expect(page).to have_link 'Edit'
       end
     end
 
-    scenario 'tried to edit his answer', js: true do
-      within '.answer' do
-        click_on 'Edit answer'
-        fill_in 'Answer', with: 'some new answer'
+    scenario ' try edit own answer', js: true do
+
+      within "#answer-#{answer.id}" do
+        click_on 'Edit'
+        fill_in 'Answer', with: 'edited answer'
         click_on 'Save'
 
         expect(page).to_not have_content answer.body
-        expect(page).to have_content 'some new answer'
+        expect(page).to have_content 'edited answer'
         expect(page).to_not have_selector 'textarea'
       end
     end
 
-    scenario 'tried to edit someone else answer'
+    scenario 'try edit not own answer', js: true do
+      visit question_path(another_question)
+
+      within '.answers' do
+        expect(page).to_not have_link 'Edit'
+        expect(page).to_not have_selector 'textarea'
+      end
+    end
   end
 end
